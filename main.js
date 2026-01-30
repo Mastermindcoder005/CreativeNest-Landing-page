@@ -81,13 +81,53 @@ document.querySelectorAll('section:not(#contact), .service-card, .team-card, .co
 
 // Contact Form Handler
 const contactForm = document.getElementById('message-form');
-contactForm?.addEventListener('submit', (e) => {
+contactForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = contactForm.querySelector('button');
     const originalText = btn.innerHTML;
 
     btn.innerHTML = '<span>Sending...</span>';
     btn.disabled = true;
+
+    try {
+        const formData = new FormData(contactForm);
+        const response = await fetch(contactForm.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            btn.innerHTML = '<span>Message Sent!</span><i data-lucide="check"></i>';
+            window.lucide?.createIcons();
+            contactForm.reset();
+            
+            // Redirect to thanks page after a short delay
+            setTimeout(() => {
+                window.location.href = 'thanks.html';
+            }, 1000);
+        } else {
+            const data = await response.json();
+            if (Object.hasOwn(data, 'errors')) {
+                throw new Error(data["errors"].map(error => error["message"]).join(", "));
+            } else {
+                throw new Error("Oops! There was a problem submitting your form");
+            }
+        }
+    } catch (error) {
+        btn.innerHTML = '<span>Error!</span><i data-lucide="alert-circle"></i>';
+        console.error('Form submission error:', error);
+        window.lucide?.createIcons();
+    } finally {
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+            window.lucide?.createIcons();
+        }, 3000);
+    }
+});
 
     // Simulate success
     setTimeout(() => {
@@ -136,3 +176,4 @@ if (typewriter) {
     }
     type();
 }
+
