@@ -1,7 +1,3 @@
-// Mobile Menu Toggle
-const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-const navLinks = document.querySelector('.nav-links');
-
 // Throttle function to limit execution frequency
 const throttle = (func, limit) => {
     let inThrottle;
@@ -16,37 +12,43 @@ const throttle = (func, limit) => {
     }
 }
 
-mobileMenuBtn?.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    // Change icon between menu and x
-    const icon = mobileMenuBtn.querySelector('i, svg');
-    if (navLinks.classList.contains('active')) {
-        icon.setAttribute('data-lucide', 'x');
-    } else {
-        icon.setAttribute('data-lucide', 'menu');
-    }
-    window.lucide?.createIcons();
-});
+document.addEventListener('DOMContentLoaded', () => {
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
 
-// Close mobile menu when a link is clicked
-navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-        const icon = mobileMenuBtn?.querySelector('i, svg');
-        icon?.setAttribute('data-lucide', 'menu');
+    mobileMenuBtn?.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        // Change icon between menu and x
+        const icon = mobileMenuBtn.querySelector('i, svg');
+        if (navLinks.classList.contains('active')) {
+            icon.setAttribute('data-lucide', 'x');
+        } else {
+            icon.setAttribute('data-lucide', 'menu');
+        }
         window.lucide?.createIcons();
     });
-});
 
-// Header scroll effect with throttling
-const header = document.querySelector('.glass-header');
-window.addEventListener('scroll', throttle(() => {
-    if (window.scrollY > 20) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
-    }
-}, 100));
+    // Close mobile menu when a link is clicked
+    navLinks?.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            const icon = mobileMenuBtn?.querySelector('i, svg');
+            icon?.setAttribute('data-lucide', 'menu');
+            window.lucide?.createIcons();
+        });
+    });
+
+    // Header scroll effect
+    const header = document.querySelector('.glass-header');
+    window.addEventListener('scroll', throttle(() => {
+        if (window.scrollY > 20) {
+            header?.classList.add('scrolled');
+        } else {
+            header?.classList.remove('scrolled');
+        }
+    }, 100));
+});
 
 // Background parallax shapes with throttling
 document.addEventListener('mousemove', throttle((e) => {
@@ -103,7 +105,7 @@ contactForm?.addEventListener('submit', async (e) => {
             btn.innerHTML = '<span>Message Sent!</span><i data-lucide="check"></i>';
             window.lucide?.createIcons();
             contactForm.reset();
-            
+
             // Redirect to thanks page after a short delay
             setTimeout(() => {
                 window.location.href = 'thanks.html';
@@ -127,20 +129,6 @@ contactForm?.addEventListener('submit', async (e) => {
             window.lucide?.createIcons();
         }, 3000);
     }
-});
-
-    // Simulate success
-    setTimeout(() => {
-        btn.innerHTML = '<span>Message Sent!</span><i data-lucide="check"></i>';
-        window.lucide?.createIcons();
-        contactForm.reset();
-
-        setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-            window.lucide?.createIcons();
-        }, 3000);
-    }, 1500);
 });
 
 // Global Image Error Handler for Project Icons
@@ -176,4 +164,3 @@ if (typewriter) {
     }
     type();
 }
-
