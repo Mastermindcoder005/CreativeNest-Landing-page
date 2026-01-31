@@ -119,8 +119,11 @@ h4 {
     width: 95%;
     max-width: var(--container-width);
     z-index: 1000;
-    background: transparent;
-    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.02);
+    /* Subtle visibility */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 100px;
     padding: 1.2rem 0;
     transition: var(--transition);
@@ -391,14 +394,23 @@ h4 {
 }
 
 .about-image {
-    padding: 2rem;
+    padding: 1rem;
     border-radius: 30px;
     position: relative;
     overflow: hidden;
+    display: flex;
+    /* Added for centering */
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.02);
+    /* Adjusted background */
 }
 
 .about-image img {
-    width: 100%;
+    max-width: 100%;
+    /* Changed from width: 100% */
+    height: auto;
+    /* Ensure aspect ratio */
     border-radius: 20px;
 }
 
@@ -584,7 +596,8 @@ h4 {
 .contact-details {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2.5rem;
+    /* Increased from 1.5rem */
     margin-top: 1rem;
 }
 
@@ -592,7 +605,8 @@ h4 {
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    padding: 1.5rem;
+    padding: 1.8rem;
+    /* Increased from 1.5rem */
     background: rgba(255, 255, 255, 0.03);
     border-radius: 15px;
     border: 1px solid var(--glass-border);
@@ -778,9 +792,14 @@ h4 {
         background: var(--bg-color);
         backdrop-filter: var(--glass-blur);
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
+        /* Changed from center */
+        padding-top: 8rem;
+        /* Added margin from top */
+        gap: 2rem;
         transition: var(--transition);
         z-index: 1001;
+        border-left: 1px solid var(--glass-border);
     }
 
     .nav-links.active {
@@ -790,6 +809,10 @@ h4 {
     .mobile-menu-btn {
         display: block;
         z-index: 1002;
+    }
+
+    .logo {
+        font-size: 1.5rem;
     }
 
     .hero-title {
@@ -812,8 +835,12 @@ h4 {
 }
 
 @media (max-width: 480px) {
+    .logo {
+        font-size: 1.3rem;
+    }
+
     .hero-title {
-        font-size: 2.2rem;
+        font-size: 2.8rem;
     }
 
     .hero-ctas {
